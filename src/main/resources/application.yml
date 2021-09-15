@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mtinv2020?serverTimezone=UTC&characterEncoding=utf8&useSSL=false&userUnicode=true
+    username: root
+    password: xxx
+  servlet:
+    multipart:
+      max-file-size: 100000000
+      max-request-size: 100000000
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.neu.mtinv.entity

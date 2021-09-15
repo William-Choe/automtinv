@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neu.mtinv.mapper.MtinfoMapper">
+    <select id="getMtinfoByType" resultType="com.neu.mtinv.entity.Mtinfo">
+        SELECT *
+        FROM mtinfo
+        WHERE type=#{type}
+        ORDER BY o_time desc;
+    </select>
+
+    <select id="getMtinfoByTypeAndLimit" resultType="com.neu.mtinv.entity.Mtinfo">
+        SELECT *
+        FROM mtinfo
+        WHERE type=#{type}
+        ORDER BY o_time desc limit 100;
+    </select>
+
+    <select id="getMtinfoById" resultType="com.neu.mtinv.entity.Mtinfo">
+        SELECT *
+        FROM mtinfo
+        WHERE id = #{id};
+    </select>
+
+    <update id="reMathSet">
+        UPDATE mtinfo
+        <set>
+            <if test="result_file != null">result_file=#{result_file},</if>
+            <if test="result_s1 != null">result_s1=#{result_s1},</if>
+            <if test="result_d1 != null">result_d1=#{result_d1},</if>
+            <if test="result_r1 != null">result_r1=#{result_r1},</if>
+            <if test="result_s2 != null">result_s2=#{result_s2},</if>
+            <if test="result_d2 != null">result_d2=#{result_d2},</if>
+            <if test="result_r2 != null">result_r2=#{result_r2},</if>
+            <if test="result_pvr != null">result_pvr=#{result_pvr}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+
+    <select id="getResultPathById" resultType="string">
+        SELECT result_path
+        FROM mtinfo
+        WHERE id = #{id};
+    </select>
+
+    <select id="getLastId" resultType="string">
+        SELECT @@identity;
+    </select>
+
+    <delete id="deleteMtinfo">
+        DELETE FROM mtinfo
+        WHERE id = #{id};
+    </delete>
+
+    <insert id="insertData">
+        INSERT INTO mtinfo(type, cataid, o_time, lat, lon, depth, m, location_cname, dist_min, dist_max, filter_min,
+            filter_max, m_time, r_time, result_path, result_file, result_time, result_lon, result_lat, result_depth,
+            result_m, result_s1, result_d1, result_r1, result_s2, result_d2, result_r2, result_pvr)
+        VALUES ('auto',#{cataid}, #{o_time}, #{lat}, #{lon}, #{depth}, #{m}, #{location_cname},  #{dist_min},  #{dist_max},
+            #{filter_min}, #{filter_max}, #{m_time}, #{r_time}, #{result_path}, #{result_file}, #{result_time},
+            #{result_lon}, #{result_lat}, #{result_depth}, #{result_m}, #{result_s1}, #{result_d1}, #{result_r1},
+            #{result_s2}, #{result_d2}, #{result_r2}, #{result_pvr});
+    </insert>
+
+    <insert id="insertDataManual">
+        INSERT INTO mtinfo(type, userid, o_time, lat, lon, depth, m, dist_min, dist_max, filter_min,
+            filter_max, m_time, r_time, result_path, result_file, result_time, result_lon, result_lat, result_depth,
+            result_m, result_s1, result_d1, result_r1, result_s2, result_d2, result_r2, result_pvr)
+        VALUES ('manual',#{userid}, #{o_time}, #{lat}, #{lon}, #{depth}, #{m}, #{dist_min},  #{dist_max},
+            #{filter_min}, #{filter_max}, #{m_time}, #{r_time}, #{result_path}, #{result_file}, #{result_time},
+            #{result_lon}, #{result_lat}, #{result_depth}, #{result_m}, #{result_s1}, #{result_d1}, #{result_r1},
+            #{result_s2}, #{result_d2}, #{result_r2}, #{result_pvr});
+    </insert>
+
+    <insert id="insertDataManualInitial">
+        INSERT INTO mtinfo(id, type, userid)
+        VALUES (NULL, 'manual', #{userid});
+    </insert>
+
+    <update id="updateMultiFilterData">
+        UPDATE mtinfo
+        <set>
+            <if test="o_time != null">o_time=#{o_time},</if>
+            <if test="lat != null">lat=#{lat},</if>
+            <if test="lon != null">lon=#{lon},</if>
+            <if test="depth != null">depth=#{depth},</if>
+            <if test="m != null">m=#{m},</if>
+            <if test="dist_min != null">dist_min=#{dist_min},</if>
+            <if test="dist_max != null">dist_max=#{dist_max},</if>
+            <if test="filter_min != null">filter_min=#{filter_min},</if>
+            <if test="filter_max != null">filter_max=#{filter_max},</if>
+            <if test="m_time != null">m_time=#{m_time},</if>
+            <if test="r_time != null">r_time=#{r_time},</if>
+            <if test="result_path != null">result_path=#{result_path},</if>
+            <if test="result_file != null">result_file=#{result_file},</if>
+            <if test="result_lon != null">result_lon=#{result_lon},</if>
+            <if test="result_lat != null">result_lat=#{result_lat},</if>
+            <if test="result_depth != null">result_depth=#{result_depth},</if>
+            <if test="result_m != null">result_m=#{result_m},</if>
+            <if test="result_s1 != null">result_s1=#{result_s1},</if>
+            <if test="result_d1 != null">result_d1=#{result_d1},</if>
+            <if test="result_r1 != null">result_r1=#{result_r1},</if>
+            <if test="result_s2 != null">result_s2=#{result_s2},</if>
+            <if test="result_d2 != null">result_d2=#{result_d2},</if>
+            <if test="result_r2 != null">result_r2=#{result_r2},</if>
+            <if test="result_pvr != null">result_pvr=#{result_pvr},</if>
+            <if test="tar_path != null">tar_path=#{tar_path},</if>
+            <if test="result_list != null">result_list=#{result_list},</if>
+            <if test="best_result_info != null">best_result_info=#{best_result_info}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+
+    <update id="updateBatchData">
+        UPDATE mtinfo
+        <set>
+            <if test="o_time != null">o_time=#{o_time},</if>
+            <if test="lat != null">lat=#{lat},</if>
+            <if test="lon != null">lon=#{lon},</if>
+            <if test="depth != null">depth=#{depth},</if>
+            <if test="m != null">m=#{m},</if>
+            <if test="location_cname != null">location_cname=#{location_cname},</if>
+            <if test="dist_min != null">dist_min=#{dist_min},</if>
+            <if test="dist_max != null">dist_max=#{dist_max},</if>
+            <if test="filter_min != null">filter_min=#{filter_min},</if>
+            <if test="filter_max != null">filter_max=#{filter_max},</if>
+            <if test="m_time != null">m_time=#{m_time},</if>
+            <if test="r_time != null">r_time=#{r_time},</if>
+            <if test="result_path != null">result_path=#{result_path},</if>
+            <if test="result_file != null">result_file=#{result_file},</if>
+            <if test="result_lon != null">result_lon=#{result_lon},</if>
+            <if test="result_lat != null">result_lat=#{result_lat},</if>
+            <if test="result_depth != null">result_depth=#{result_depth},</if>
+            <if test="result_m != null">result_m=#{result_m},</if>
+            <if test="result_s1 != null">result_s1=#{result_s1},</if>
+            <if test="result_d1 != null">result_d1=#{result_d1},</if>
+            <if test="result_r1 != null">result_r1=#{result_r1},</if>
+            <if test="result_s2 != null">result_s2=#{result_s2},</if>
+            <if test="result_d2 != null">result_d2=#{result_d2},</if>
+            <if test="result_r2 != null">result_r2=#{result_r2},</if>
+            <if test="result_pvr != null">result_pvr=#{result_pvr},</if>
+            <if test="tar_path != null">tar_path=#{tar_path},</if>
+            <if test="result_list != null">result_list=#{result_list},</if>
+            <if test="root_path != null">root_path=#{root_path}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+
+    <select id="checkProgress" resultType="string">
+        SELECT result_list
+        FROM mtinfo
+        WHERE id = #{id};
+    </select>
+
+    <select id="checkID" resultType="string">
+        SELECT count(*)
+        FROM mtinfo
+        WHERE id = #{id};
+    </select>
+
+    <select id="getMultiFilterResult" resultType="map">
+        SELECT result_list, tar_path, best_result_info
+        FROM mtinfo
+        WHERE id = #{id};
+    </select>
+
+    <select id="getBatchResult" resultType="map">
+        SELECT result_list, tar_path, root_path
+        FROM mtinfo
+        WHERE id = #{id};
+    </select>
+</mapper>

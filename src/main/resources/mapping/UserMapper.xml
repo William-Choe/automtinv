@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neu.mtinv.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.neu.mtinv.entity.User">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        id, username, password, realname, email, phone
+    </sql>
+
+    <select id="findByUsername" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            user
+        WHERE
+            username=#{username};
+    </select>
+
+    <select id="usernameExist" resultType="string">
+        SELECT username
+        FROM user
+        WHERE username = #{username};
+    </select>
+
+    <insert id="addUser">
+        INSERT INTO user(username, password, realname, email, phone)
+        VALUES (#{username}, #{password}, #{realname}, #{email}, #{phone});
+    </insert>
+
+    <insert id="addUserRole">
+        INSERT INTO user_role(uid, role_id)
+        VALUES (#{user_id}, #{role_id});
+    </insert>
+
+    <select id="getUsers" resultMap="userRoleResultMap">
+        SELECT user.id uid, username, password, realname, email, phone, r.id rid, role_name
+        FROM user JOIN user_role ON user.id = user_role.uid
+            LEFT JOIN role r on user_role.role_id = r.id;
+    </select>
+
+    <resultMap id="userRoleResultMap" type="com.neu.mtinv.entity.User">
+        <id column="uid" property="id" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <association property="role" javaType="com.neu.mtinv.entity.Role">
+            <id property="id" column="rid"/>
+            <result property="role_name" column="role_name"/>
+        </association>
+    </resultMap>
+
+    <delete id="deleteUser">
+        DELETE FROM user
+        WHERE id = #{user_id};
+    </delete>
+
+    <delete id="deleteUserRole">
+        DELETE FROM user_role
+        WHERE uid = #{id};
+    </delete>
+</mapper>

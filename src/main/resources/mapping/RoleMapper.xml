@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neu.mtinv.mapper.RoleMapper">
+    <select id="findRoleByUsername" resultType="com.neu.mtinv.entity.Role" parameterType="string">
+        SELECT
+            role.id id,
+            role.role_name role_name
+        FROM
+            user
+                RIGHT JOIN user_role ON user.id = user_role.uid
+                Left JOIN role ON role.id = user_role.role_id
+        WHERE
+            user.username = #{username}
+    </select>
+
+    <select id="getRoles" resultType="com.neu.mtinv.entity.Role">
+        SELECT id, role_name
+        FROM role;
+    </select>
+</mapper>

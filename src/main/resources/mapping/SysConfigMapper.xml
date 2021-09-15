@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neu.mtinv.mapper.SysConfigMapper">
+    <select id="getSysconfig" resultType="com.neu.mtinv.entity.SysConfig">
+        SELECT
+            *
+        FROM
+            sysconfig
+    </select>
+
+    <update id="setEqimDB">
+        UPDATE sysconfig
+        <set>
+            <if test="ip != null">eqim_ip=#{ip},</if>
+            <if test="user != null">eqim_user=#{user},</if>
+            <if test="pass != null">eqim_pass=#{pass},</if>
+            <if test="sid != null">eqim_sid=#{sid}</if>
+        </set>
+    </update>
+
+    <update id="setEqimSendSwitch">
+        UPDATE sysconfig
+        <set>
+            <if test="doSend != null">eqim_doSend=#{doSend}</if>
+        </set>
+    </update>
+
+    <update id="setEqimSendPara">
+        UPDATE sysconfig
+        <set>
+            <if test="send_m != null">eqim_sendM=#{send_m},</if>
+            <if test="send_ip != null">eqim_sendIP=#{send_ip},</if>
+            <if test="send_port != null">eqim_sendPort=#{send_port},</if>
+            <if test="send_user != null">eqim_sendUser=#{send_user},</if>
+            <if test="send_pass != null">eqim_sendPass=#{send_pass},</if>
+            <if test="send_cname != null">eqim_sendCname=#{send_cname},</if>
+            <if test="send_sname != null">eqim_sendSname=#{send_sname}</if>
+        </set>
+    </update>
+
+    <update id="setEqimCatalog">
+        UPDATE sysconfig
+        <set>
+            <if test="mine != null">catalog_minE=#{mine},</if>
+            <if test="maxe != null">catalog_maxE=#{maxe},</if>
+            <if test="minn != null">catalog_minN=#{minn},</if>
+            <if test="maxn != null">catalog_maxN=#{maxn},</if>
+            <if test="minm != null">catalog_minM=#{minm},</if>
+            <if test="maxm != null">catalog_maxM=#{maxm},</if>
+            <if test="jg != null">catalog_jg=#{jg}</if>
+        </set>
+    </update>
+
+    <update id="setEqimShow">
+        UPDATE sysconfig
+        <set>
+            <if test="mine != null">show_minE=#{mine},</if>
+            <if test="maxe != null">show_maxE=#{maxe},</if>
+            <if test="minn != null">show_minN=#{minn},</if>
+            <if test="maxn != null">show_maxN=#{maxn},</if>
+            <if test="minm != null">show_minM=#{minm},</if>
+            <if test="maxm != null">show_maxM=#{maxm},</if>
+            <if test="jg != null">show_jg=#{jg}</if>
+        </set>
+    </update>
+
+    <update id="setSeedConfig">
+        UPDATE sysconfig
+        <set>
+            <if test="sbef != null">seed_bef=#{sbef},</if>
+            <if test="st != null">seed_time=#{st}</if>
+        </set>
+    </update>
+
+    <update id="setMtConfig">
+        UPDATE sysconfig
+        <set>
+            <if test="minl != null">mtinv_minL=#{minl},</if>
+            <if test="maxl != null">mtinv_maxL=#{maxl},</if>
+            <if test="mind != null">mtinv_minD=#{mind},</if>
+            <if test="maxd != null">mtinv_maxD=#{maxd}</if>
+        </set>
+    </update>
+
+    <update id="updateShowMsg">
+        UPDATE sysconfig
+        <set>
+            <if test="showMsg != null">showMsg=#{showMsg}</if>
+        </set>
+    </update>
+
+    <select id="getShowMsg" resultType="string">
+        SELECT showMsg
+        FROM sysconfig
+    </select>
+
+    <update id="setCalWaitTime">
+        UPDATE sysconfig
+        <set>
+            <if test="cal_wait_time != null">cal_wait_time=#{cal_wait_time}</if>
+        </set>
+    </update>
+</mapper>
